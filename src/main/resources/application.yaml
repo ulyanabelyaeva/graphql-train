@@ -3,3 +3,8 @@ spring:
     name: graphql-train
   graphql:
     path: /api/graphql
+
+logging:
+  level:
+    root: info
+    org.belyaeva: debug

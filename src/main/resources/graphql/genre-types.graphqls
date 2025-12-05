@@ -1,0 +1,10 @@
+type Genre {
+    id: ID
+    name: String
+    books: [Book]
+}
+
+input GenreFilter {
+    name: FilterField
+    bookCount: FilterField
+}

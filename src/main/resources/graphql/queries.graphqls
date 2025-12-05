@@ -1,0 +1,10 @@
+type Query {
+    getAllBooks : [Book]
+    getBookById(id: ID!): Book
+
+    getAllGenres(filter: GenreFilter): [Genre]
+}
+
+type Mutation {
+    createNewBook(book: NewBook!): ID
+}

@@ -1,0 +1,4 @@
+input FilterField {
+    operator: String!
+    value: String!
+}

@@ -1,0 +1,13 @@
+type Book {
+    id: ID
+    name: String
+    pageCount: Int,
+    author: Author,
+    genres: [Genre]
+}
+
+input NewBook {
+    name: String!
+    pageCount: Int!
+    genreIds: [ID]
+}

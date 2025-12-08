@@ -1,6 +1,6 @@
 package org.belyaeva.dto;
 
-import java.util.*;
+import java.util.List;
 
 public class Book {
 
@@ -9,36 +9,6 @@ public class Book {
     private Integer pageCount;
     private Long authorId;
     private List<Long> genreIds;
-
-    public Book(Long id, String name, Integer pageCount, Long authorId, List<Long> genreIds) {
-        this.id = id;
-        this.name = name;
-        this.pageCount = pageCount;
-        this.authorId = authorId;
-        this.genreIds = genreIds;
-    }
-
-    public static List<Book> books = new ArrayList<>(List.of(
-            new Book(1L, "Harry Potter", 1030, 1L, List.of(1L)),
-            new Book(2L, "Foo", 300, 2L, List.of()),
-            new Book(3L, "Game of Thrones", 5600, 1L, List.of(2L)),
-            new Book(4L, "Spring in Action", 2000, 2L, List.of(1L, 2L))
-    ));
-
-    public static Book getById(Long id) {
-        return books.stream()
-                .filter(b -> Objects.equals(b.id, id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Book was not found by " + id));
-    }
-
-    public static Long addNewBook(NewBook request) {
-        long newId = UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE;
-        List<Long> existedGenres = Genre.genres.stream().map(Genre::getId).toList();
-        List<Long> availableGenreIds = request.getGenreIds().stream().filter(existedGenres::contains).toList();
-        books.add(new Book(newId, request.getName(), request.getPageCount(), null, availableGenreIds));
-        return newId;
-    }
 
     public Long getId() {
         return id;

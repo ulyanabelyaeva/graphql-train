@@ -11,3 +11,12 @@ input NewBook {
     pageCount: Int!
     genreIds: [ID]
 }
+
+input BookFilter {
+    name: FilterField
+    pageCount: FilterField
+    authorName: FilterField
+    genreName: FilterField
+    pageNumber: Int
+    pageSize: Int
+}

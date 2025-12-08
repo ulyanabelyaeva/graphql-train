@@ -1,23 +1,22 @@
-package org.belyaeva.dto;
+package org.belyaeva.entity;
 
-public class Genre {
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "genre")
+public class GenreEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
-
-    public Genre() {
-    }
-
-    public Genre(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public Long getId() {
         return id;
     }
 
-    public Genre setId(Long id) {
+    public GenreEntity setId(Long id) {
         this.id = id;
         return this;
     }
@@ -26,14 +25,14 @@ public class Genre {
         return name;
     }
 
-    public Genre setName(String name) {
+    public GenreEntity setName(String name) {
         this.name = name;
         return this;
     }
 
     @Override
     public String toString() {
-        return "Genre{" +
+        return "GenreEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';

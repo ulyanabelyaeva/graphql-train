@@ -1,15 +1,15 @@
-package org.belyaeva.dto;
+package org.belyaeva.dto.basic;
 
 public class FieldFilter {
 
-    private String operator;
+    private FilterOperator operator;
     private String value;
 
-    public String getOperator() {
+    public FilterOperator getOperator() {
         return operator;
     }
 
-    public FieldFilter setOperator(String operator) {
+    public FieldFilter setOperator(FilterOperator operator) {
         this.operator = operator;
         return this;
     }

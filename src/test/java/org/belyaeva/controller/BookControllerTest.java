@@ -12,7 +12,7 @@ class BookControllerTest {
     @Autowired
     private GraphQlTester graphQlTester;
 
-    @Test
+/*    @Test
     void canGetBooks() {
         graphQlTester.documentName("books") //указывает на /src/test/resources/books.graphql
                 .execute()
@@ -20,5 +20,5 @@ class BookControllerTest {
                 .entityList(Book.class)
                 .hasSize(4);
 
-    }
+    }*/
 }

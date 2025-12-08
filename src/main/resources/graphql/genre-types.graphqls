@@ -3,8 +3,3 @@ type Genre {
     name: String
     books: [Book]
 }
-
-input GenreFilter {
-    name: FilterField
-    bookCount: FilterField
-}

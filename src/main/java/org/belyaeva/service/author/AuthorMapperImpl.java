@@ -6,8 +6,7 @@ import org.belyaeva.service.author.api.AuthorMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
+import static java.util.Objects.isNull;
 import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 
 @Component
@@ -15,9 +14,10 @@ public class AuthorMapperImpl implements AuthorMapper {
 
     @Override
     @Transactional(propagation = MANDATORY)
-    public Optional<Author> toDto(Optional<AuthorEntity> author) {
-        return author
-                .map(a -> new Author(a.getId(), a.getName()))
-                .or(Optional::empty);
+    public Author toDto(AuthorEntity author) {
+        if (isNull(author)) {
+            return null;
+        }
+        return new Author(author.getId(), author.getName());
     }
 }

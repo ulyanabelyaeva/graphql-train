@@ -22,6 +22,7 @@ public class BookEntity {
     private Integer pageCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
     private AuthorEntity author;
 
     @OneToMany(mappedBy = "book", cascade = ALL)

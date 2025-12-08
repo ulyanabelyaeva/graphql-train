@@ -1,5 +1,6 @@
 package org.belyaeva.service.book;
 
+import graphql.schema.DataFetchingFieldSelectionSet;
 import org.belyaeva.dto.Book;
 import org.belyaeva.dto.BookFilter;
 import org.belyaeva.dto.NewBook;
@@ -9,8 +10,8 @@ import org.belyaeva.entity.GenreEntity;
 import org.belyaeva.repository.BookRepository;
 import org.belyaeva.repository.GenreRepository;
 import org.belyaeva.service.book.api.BookMapper;
-import org.belyaeva.service.book.api.BookSearchHelper;
 import org.belyaeva.service.book.api.BookService;
+import org.belyaeva.service.book.api.BookSearchHelper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -39,11 +40,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Book> getAllBooks(BookFilter request) {
-        Specification<BookEntity> specification = bookSearchHelper.createSpecification(request);
+    public List<Book> getAllBooks(BookFilter request, DataFetchingFieldSelectionSet selectionSet) {
+        Specification<BookEntity> specification = bookSearchHelper.createSpecification(request, selectionSet);
         Pageable pageable = bookSearchHelper.createPageable(request);
         Page<BookEntity> page = bookRepository.findAll(specification, pageable);
-        return page.stream().map(bookMapper::toDto).toList();
+        return bookMapper.toDtoList(page, selectionSet);
     }
 
     @Override

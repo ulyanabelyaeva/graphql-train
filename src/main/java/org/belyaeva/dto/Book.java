@@ -1,5 +1,6 @@
 package org.belyaeva.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Book {
@@ -7,8 +8,8 @@ public class Book {
     private Long id;
     private String name;
     private Integer pageCount;
-    private Long authorId;
-    private List<Long> genreIds;
+    private Author author;
+    private List<Genre> genres = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -37,21 +38,21 @@ public class Book {
         return this;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public Author getAuthor() {
+        return author;
     }
 
-    public Book setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public Book setAuthor(Author author) {
+        this.author = author;
         return this;
     }
 
-    public List<Long> getGenreIds() {
-        return genreIds;
+    public List<Genre> getGenres() {
+        return genres;
     }
 
-    public Book setGenreIds(List<Long> genreIds) {
-        this.genreIds = genreIds;
+    public Book setGenres(List<Genre> genres) {
+        this.genres = genres;
         return this;
     }
 
@@ -61,8 +62,8 @@ public class Book {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", pageCount=" + pageCount +
-                ", authorId=" + authorId +
-                ", genreIds=" + genreIds +
+                ", author=" + author +
+                ", genres=" + genres +
                 '}';
     }
 }

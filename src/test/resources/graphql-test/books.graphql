@@ -1,11 +1,18 @@
-query books {
-    books {
+query GetAllBooks {
+    getAllBooks(filter: { pageNumber: 0, pageSize: 10 }) {
         name
         pageCount
-        id
+        genres {
+            id
+            name
+        }
         author {
             id
             name
         }
     }
+}
+
+mutation CreateNewBook {
+    createNewBook(book: { name: "Dune", pageCount: 1500 })
 }

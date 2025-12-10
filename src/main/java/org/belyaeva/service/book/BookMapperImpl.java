@@ -59,18 +59,21 @@ public class BookMapperImpl implements BookMapper {
                                 DataFetchingFieldSelectionSet selectionSet) {
         Map<Long, List<BookGenreProjection>> genreMap = new HashMap<>();
         boolean fillGenres = selectionSet.contains("genres");
+        boolean fillAuthor = selectionSet.contains("author");
         if (fillGenres) {
             genreMap = genreRepository.findByBooks(page.toList()).stream()
                     .collect(Collectors.groupingBy(BookGenreProjection::bookId));
         }
         List<Book> dtoList = new ArrayList<>();
         for (BookEntity book : page) {
-            Author authorDto = authorMapper.toDto(book.getAuthor());
             Book dto = new Book()
                     .setId(book.getId())
                     .setName(book.getName())
-                    .setPageCount(book.getPageCount())
-                    .setAuthor(authorDto);
+                    .setPageCount(book.getPageCount());
+            if (fillAuthor) {
+                Author authorDto = authorMapper.toDto(book.getAuthor());
+                dto.setAuthor(authorDto);
+            }
             if (fillGenres) {
                 List<BookGenreProjection> genresInfo = genreMap.get(book.getId());
                 List<Genre> genreDtoList = genreMapper.toDtoListFromProjections(genresInfo);

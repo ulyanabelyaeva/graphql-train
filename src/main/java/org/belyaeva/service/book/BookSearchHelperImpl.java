@@ -5,7 +5,6 @@ import jakarta.persistence.criteria.Fetch;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import org.belyaeva.dto.BookFilter;
-import org.belyaeva.dto.basic.FieldFilter;
 import org.belyaeva.entity.AuthorEntity;
 import org.belyaeva.entity.BookEntity;
 import org.belyaeva.entity.BookEntity_;
@@ -19,35 +18,29 @@ import org.springframework.stereotype.Component;
 @Component
 public class BookSearchHelperImpl implements BookSearchHelper {
 
-    private final CriteriaGenerator criteriaGenerator;
+    private final CriteriaGenerator<BookEntity> criteriaGenerator;
 
-    public BookSearchHelperImpl(CriteriaGenerator criteriaGenerator) {
+    public BookSearchHelperImpl(CriteriaGenerator<BookEntity> criteriaGenerator) {
         this.criteriaGenerator = criteriaGenerator;
     }
 
     @Override
     public Specification<BookEntity> createSpecification(BookFilter request,
                                                          DataFetchingFieldSelectionSet selectionSet) {
-        Specification<BookEntity> base = (root, query, cb) -> query.distinct(true).getRestriction();
+        Specification<BookEntity> base = (root, query, cb) -> {
+            query.distinct(true);
+            return cb.conjunction();
+        };
         if (selectionSet.contains("author")) {
             base = base.and(this.fetchAuthor());
         }
-        return base.and(this.addFilterByName(request.getName()))
-                .and(this.addFilterByName(request.getName()))
-                .and(this.addFilterByPageCount(request.getPageCount()));
+        return base.and(criteriaGenerator.generateCriteria(BookEntity_.NAME, request.getName()))
+                .and(criteriaGenerator.generateCriteria(BookEntity_.PAGE_COUNT, request.getPageCount()));
     }
 
     @Override
     public Pageable createPageable(BookFilter request) {
         return PageRequest.of(request.getPageNumber(), request.getPageSize());
-    }
-
-    private Specification<BookEntity> addFilterByName(FieldFilter filter) {
-        return (root, query, builder) -> criteriaGenerator.generateCriteria(builder, root, BookEntity_.NAME, filter);
-    }
-
-    private Specification<BookEntity> addFilterByPageCount(FieldFilter filter) {
-        return (root, query, builder) -> criteriaGenerator.generateCriteria(builder, root, BookEntity_.PAGE_COUNT, filter);
     }
 
     private Specification<BookEntity> fetchAuthor() {

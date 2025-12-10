@@ -17,6 +17,6 @@ input BookFilter {
     pageCount: FilterField
     authorName: FilterField
     genreName: FilterField
-    pageNumber: Int
-    pageSize: Int
+    pageNumber: Int!
+    pageSize: Int!
 }

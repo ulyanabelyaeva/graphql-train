@@ -1,14 +1,10 @@
 package org.belyaeva.service.common.api;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import org.belyaeva.dto.basic.FieldFilter;
+import org.springframework.data.jpa.domain.Specification;
 
-public interface CriteriaGenerator {
+public interface CriteriaGenerator<E> {
 
-    Predicate generateCriteria(CriteriaBuilder cb,
-                               Root<?> root,
-                               String innerField,
-                               FieldFilter filter);
+    Specification<E> generateCriteria(String innerField,
+                                      FieldFilter filter);
 }

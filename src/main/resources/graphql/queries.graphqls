@@ -6,3 +6,7 @@ type Query {
 type Mutation {
     createNewBook(book: NewBook!): ID
 }
+
+type Subscription {
+    getNewBooksInRealTime(roomId: String!): Book
+}

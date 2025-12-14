@@ -3,6 +3,8 @@ spring:
     name: graphql-train
   graphql:
     path: /api/graphql
+    websocket:
+      path: /api/graphql
   datasource:
     url: jdbc:h2:mem:test
     driverClassName: org.h2.Driver

@@ -10,8 +10,11 @@ import org.slf4j.Logger;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SubscriptionMapping;
 import org.springframework.stereotype.Controller;
+import reactor.core.publisher.Flux;
 
+import java.time.Duration;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -45,5 +48,11 @@ public class BookController {
     public Long createNewBook(@Argument NewBook book) {
         LOGGER.debug("Creating new Book {}", book);
         return bookService.addNewBook(book);
+    }
+
+    @SubscriptionMapping
+    public Flux<Book> getNewBooksInRealTime(@Argument String roomId) {
+        return Flux.interval(Duration.ofSeconds(2))
+                .map(num -> new Book().setId(num).setName("Dune " + num).setPageCount(1000));
     }
 }

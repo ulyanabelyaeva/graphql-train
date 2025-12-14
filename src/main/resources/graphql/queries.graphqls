@@ -8,5 +8,6 @@ type Mutation {
 }
 
 type Subscription {
-    getNewBooksInRealTime(roomId: String!): Book
+    getNewBooksInRealTime: Book
+    getMockBooksEverySecond: Book
 }
